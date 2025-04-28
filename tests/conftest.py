@@ -6,6 +6,4 @@ TEST_DIR_PARENT = (THIS_DIR / "..").resolve()
 
 sys.path.insert(0, str(TEST_DIR_PARENT))
 
-pytest_plugins = [
-    "tests.fixtures.project_dir"
-]
+pytest_plugins = ["tests.fixtures.project_dir"]
