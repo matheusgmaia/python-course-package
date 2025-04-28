@@ -35,24 +35,8 @@ jobs:
         run: |
           /bin/bash -x run.sh lint:ci
 
-  cookiecut:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Set up Python 3.8
-        uses: actions/setup-python@v3
-        with:
-          python-version: 3.8
-      - name: Install
-        run: |
-          /bin/bash -x run.sh intall
-      - name: Run cookiecutter
-        run: |
-          /bin/bash -x run.sh generate-project
 
   execute-tests:
-    needs:
-      - cookiecut
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -60,7 +44,11 @@ jobs:
         uses: actions/setup-python@v3
         with:
           python-version: 3.8
-      - name: Lint, Format, and other static code quality checks
+      - name: Configure git CLI
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "gitbot-user@python.com"
+      - name: Run tests
         run: |
           make install
           make test
